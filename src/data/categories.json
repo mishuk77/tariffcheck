@@ -1,0 +1,190 @@
+{
+  "categories": [
+    {
+      "id": "electronics",
+      "name": "Electronics & Computers",
+      "icon": "💻",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Phones, laptops, tablets, components, semiconductors"
+    },
+    {
+      "id": "clothing",
+      "name": "Clothing & Apparel",
+      "icon": "👕",
+      "base_mfn_rate": 12,
+      "section_301_rate_china": 7.5,
+      "section_232_applies": false,
+      "examples": "T-shirts, dresses, jackets, shoes"
+    },
+    {
+      "id": "footwear",
+      "name": "Footwear",
+      "icon": "👟",
+      "base_mfn_rate": 10,
+      "section_301_rate_china": 15,
+      "section_232_applies": false,
+      "examples": "Sneakers, boots, sandals, athletic shoes"
+    },
+    {
+      "id": "steel_metals",
+      "name": "Steel & Metals",
+      "icon": "🔩",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": true,
+      "section_232_rate": 25,
+      "examples": "Steel products, aluminum, metal parts"
+    },
+    {
+      "id": "aluminum",
+      "name": "Aluminum",
+      "icon": "🪶",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": true,
+      "section_232_rate": 25,
+      "examples": "Aluminum sheets, cans, foil, extrusions"
+    },
+    {
+      "id": "automotive",
+      "name": "Automobiles & Auto Parts",
+      "icon": "🚗",
+      "base_mfn_rate": 2.5,
+      "section_301_rate_china": 25,
+      "section_232_applies": true,
+      "section_232_rate": 25,
+      "examples": "Cars, trucks, engines, transmissions, body parts"
+    },
+    {
+      "id": "furniture",
+      "name": "Furniture & Home Goods",
+      "icon": "🛋️",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Sofas, tables, chairs, mattresses, home decor"
+    },
+    {
+      "id": "toys",
+      "name": "Toys & Games",
+      "icon": "🧸",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 7.5,
+      "section_232_applies": false,
+      "examples": "Action figures, board games, dolls, puzzles"
+    },
+    {
+      "id": "food_agriculture",
+      "name": "Food & Agricultural Products",
+      "icon": "🌾",
+      "base_mfn_rate": 5,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Produce, meat, seafood, grains, beverages"
+    },
+    {
+      "id": "machinery",
+      "name": "Machinery & Equipment",
+      "icon": "⚙️",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Industrial machines, pumps, generators, tools"
+    },
+    {
+      "id": "pharmaceuticals",
+      "name": "Pharmaceuticals & Medical",
+      "icon": "💊",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Drugs, medical devices, surgical instruments"
+    },
+    {
+      "id": "plastics_rubber",
+      "name": "Plastics & Rubber",
+      "icon": "♻️",
+      "base_mfn_rate": 3,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Plastic containers, rubber products, polymers"
+    },
+    {
+      "id": "textiles",
+      "name": "Textiles & Fabrics",
+      "icon": "🧵",
+      "base_mfn_rate": 10,
+      "section_301_rate_china": 7.5,
+      "section_232_applies": false,
+      "examples": "Fabric, yarn, thread, curtains, linens"
+    },
+    {
+      "id": "chemicals",
+      "name": "Chemicals",
+      "icon": "🧪",
+      "base_mfn_rate": 3,
+      "section_301_rate_china": 25,
+      "section_232_applies": false,
+      "examples": "Industrial chemicals, fertilizers, paints"
+    },
+    {
+      "id": "copper",
+      "name": "Copper",
+      "icon": "🔶",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": true,
+      "section_232_rate": 50,
+      "examples": "Copper wire, pipes, sheets, alloys"
+    },
+    {
+      "id": "lumber",
+      "name": "Lumber & Wood Products",
+      "icon": "🪵",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": true,
+      "section_232_rate": 10,
+      "examples": "Softwood lumber, plywood, wood panels"
+    },
+    {
+      "id": "semiconductors",
+      "name": "Semiconductors & Chips",
+      "icon": "🔌",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 25,
+      "section_232_applies": true,
+      "section_232_rate": 25,
+      "examples": "Chips, wafers, semiconductor manufacturing equipment"
+    },
+    {
+      "id": "jewelry",
+      "name": "Jewelry & Watches",
+      "icon": "💎",
+      "base_mfn_rate": 6,
+      "section_301_rate_china": 7.5,
+      "section_232_applies": false,
+      "examples": "Gold jewelry, silver, watches, gemstones"
+    },
+    {
+      "id": "cosmetics",
+      "name": "Cosmetics & Personal Care",
+      "icon": "🧴",
+      "base_mfn_rate": 0,
+      "section_301_rate_china": 7.5,
+      "section_232_applies": false,
+      "examples": "Skincare, makeup, hair products, perfume"
+    },
+    {
+      "id": "other",
+      "name": "Other / General Merchandise",
+      "icon": "📦",
+      "base_mfn_rate": 3.5,
+      "section_301_rate_china": 15,
+      "section_232_applies": false,
+      "examples": "Miscellaneous goods not listed above"
+    }
+  ]
+}
