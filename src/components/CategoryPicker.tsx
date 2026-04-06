@@ -39,7 +39,7 @@ export default function CategoryPicker({ selected, onSelect }: Props) {
         <Text style={{ color: theme.textSecondary }}>▼</Text>
       </TouchableOpacity>
 
-      <Modal visible={visible} animationType="slide" presentationStyle="pageSheet">
+      <Modal visible={visible} animationType="slide">
         <View style={[styles.modal, { backgroundColor: theme.background }]}>
           <View style={styles.modalHeader}>
             <Text style={[styles.modalTitle, { color: theme.text }]}>Select Category</Text>

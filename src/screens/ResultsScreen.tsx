@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   badges: {
     marginBottom: 16,
-    gap: 8,
+    marginTop: 8,
   },
   notes: {
     fontSize: 14,

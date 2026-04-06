@@ -54,7 +54,7 @@ export default function CountryPicker({ selected, onSelect }: Props) {
         <Text style={{ color: theme.textSecondary }}>▼</Text>
       </TouchableOpacity>
 
-      <Modal visible={visible} animationType="slide" presentationStyle="pageSheet">
+      <Modal visible={visible} animationType="slide">
         <KeyboardAvoidingView
           style={[styles.modal, { backgroundColor: theme.background }]}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}

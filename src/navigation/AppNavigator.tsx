@@ -28,11 +28,6 @@ export default function AppNavigator() {
         },
         headerTintColor: isDarkMode ? colors.dark.text : colors.light.text,
         headerShadowVisible: false,
-        contentStyle: {
-          backgroundColor: isDarkMode
-            ? colors.dark.background
-            : colors.light.background,
-        },
       }}
     >
       <Stack.Screen
