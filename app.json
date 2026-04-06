@@ -31,13 +31,13 @@
       "favicon": "./assets/favicon.png"
     },
     "updates": {
-      "url": "https://u.expo.dev/your-project-id",
+      "url": "https://u.expo.dev/e7856643-e002-485e-9ed7-3d6a966562dd",
       "enabled": true,
       "fallbackToCacheTimeout": 0
     },
     "extra": {
       "eas": {
-        "projectId": "your-project-id"
+        "projectId": "e7856643-e002-485e-9ed7-3d6a966562dd"
       }
     }
   }
