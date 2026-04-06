@@ -1,0 +1,91 @@
+name: OTA Update
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      # These paths trigger full builds via preview.yml instead
+      - 'package.json'
+      - 'package-lock.json'
+      - 'app.json'
+      - 'eas.json'
+      - 'ios/**'
+      - 'android/**'
+      # Don't trigger on docs/config changes
+      - '*.md'
+      - '.github/**'
+      - '.eslintrc.json'
+      - '.env.example'
+
+concurrency:
+  group: ota-update-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-checks:
+    name: Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npx eslint . --ext .ts,.tsx --max-warnings 0
+
+      - name: Run tests
+        run: npx jest --ci
+
+  update:
+    name: EAS OTA Update
+    needs: quality-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish OTA update
+        id: update
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
+          eas update \
+            --branch preview \
+            --message "$COMMIT_MSG" \
+            --non-interactive
+
+      - name: Comment on commit
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: `## ⚡ OTA Update Published\n\nJS-only changes pushed via EAS Update to the **preview** channel.\n\nOpen the app on your device — it will update automatically on next launch.\n\n_From commit ${context.sha.substring(0, 7)}: ${context.payload.head_commit?.message?.split('\\n')[0] || ''}_`
+            });

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, TextStyle } from 'react-native';
+import { Text, StyleProp, TextStyle } from 'react-native';
 
 interface Props {
   value: number;
   prefix?: string;
   suffix?: string;
   duration?: number;
-  style?: TextStyle;
+  style?: StyleProp<TextStyle>;
   formatFn?: (n: number) => string;
 }
 

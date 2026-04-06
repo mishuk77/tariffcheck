@@ -1,0 +1,131 @@
+name: Preview Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Trigger full build when native deps or config change
+      - 'package.json'
+      - 'package-lock.json'
+      - 'app.json'
+      - 'eas.json'
+      - 'ios/**'
+      - 'android/**'
+
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to build'
+        required: true
+        default: 'android'
+        type: choice
+        options:
+          - android
+          - ios
+          - all
+
+concurrency:
+  group: preview-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-checks:
+    name: Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npx eslint . --ext .ts,.tsx --max-warnings 0
+
+      - name: Run tests
+        run: npx jest --ci --coverage
+
+  build:
+    name: EAS Preview Build
+    needs: quality-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Determine platform
+        id: platform
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "platform=${{ github.event.inputs.platform }}" >> $GITHUB_OUTPUT
+          else
+            echo "platform=android" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build preview
+        id: build
+        run: |
+          BUILD_OUTPUT=$(eas build \
+            --platform ${{ steps.platform.outputs.platform }} \
+            --profile preview \
+            --non-interactive \
+            --json 2>&1 | tail -1)
+          echo "build_output=$BUILD_OUTPUT" >> $GITHUB_OUTPUT
+
+      - name: Extract build URLs
+        id: urls
+        run: |
+          echo '${{ steps.build.outputs.build_output }}' | \
+            python3 -c "
+          import sys, json
+          try:
+              builds = json.loads(sys.stdin.read())
+              if isinstance(builds, list):
+                  for b in builds:
+                      platform = b.get('platform', 'unknown')
+                      url = b.get('artifacts', {}).get('buildUrl', b.get('buildDetailsPage', 'N/A'))
+                      print(f'{platform}: {url}')
+              else:
+                  print(f'Build: {builds}')
+          except:
+              print('See EAS dashboard for build status')
+          " > build_urls.txt
+          cat build_urls.txt
+
+      - name: Comment on commit
+        if: github.event_name == 'push'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const urls = fs.readFileSync('build_urls.txt', 'utf8');
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: `## 📱 Preview Build Ready\n\n${urls}\n\nInstall the APK directly on your Android device, or check the [EAS Dashboard](https://expo.dev) for details.\n\n_Built from commit ${context.sha.substring(0, 7)}_`
+            });
